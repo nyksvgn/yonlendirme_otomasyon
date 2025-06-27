@@ -1,0 +1,1 @@
+# yonlendirme_otomasyon
