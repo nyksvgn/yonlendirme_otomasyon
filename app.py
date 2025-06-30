@@ -29,10 +29,10 @@ if uploaded_po and uploaded_yon:
         }
 
         nakliye_kod_map = {
-            ("ZT", "01"): "ZTIR01",
-            ("ZT", "02"): "ZTIR02",
-            ("ZK", "01"): "ZKMY01",
-            ("ZK", "02"): "ZKMY02"
+            ("ZT", "02"): "ZTIR01",
+            ("ZT", "01"): "ZTIR02",
+            ("ZK", "02"): "ZKMY01",
+            ("ZK", "01"): "ZKMY02"
         }
 
         try:
