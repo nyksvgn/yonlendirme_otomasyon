@@ -1,4 +1,4 @@
-
+ 
 import streamlit as st
 import openpyxl
 import io
@@ -29,10 +29,10 @@ if uploaded_po and uploaded_yon:
 
         nakliye_kod_map = {
             ("ZTIR", "Gidiş"): "ZTIR01",
-            ("ZTIR", "Gidiş-Dönüş"): "ZTIR02",
+            ("ZTIR", "GidişDönüş"): "ZTIR02",
             ("ZKMY", "Gidiş"): "ZKMY01",
-            ("ZKMY", "Gidiş-Dönüş"): "ZKMY02"
-        }
+            ("ZKMY", "GidişDönüş"): "ZKMY02"
+         }
 
         try:
             wb_src = openpyxl.load_workbook(uploaded_po, data_only=True)
@@ -62,8 +62,12 @@ if uploaded_po and uploaded_yon:
                 yon_idx = src_headers.get("Nakliye Tipi Tanımı")
                 dst_nt_idx = dst_headers.get("Nakliye araçları")
                 if None not in (nk_idx, yon_idx, dst_nt_idx):
-                    nk_val = str(row[nk_idx]).strip().upper() if row[nk_idx] else ""
-                    yon_val = str(row[yon_idx]).strip().zfill(2) if row[yon_idx] else ""
+                    def clean(val):
+                       return re.sub(r"\s+", "", str(val).strip().upper())
+                    def clean_title(val):
+                        return re.sub(r"[-–]", "", str(val).strip().title())  
+                    nk_val = clean(row[nk_idx]) if row[nk_idx] else ""
+                    yon_val = clean_title(row[yon_idx]) if row[yon_idx] else ""
                     combined = nakliye_kod_map.get((nk_val, yon_val), f"{nk_val}{yon_val}")
                     ws_dst.cell(row=dst_row, column=dst_nt_idx+1, value=combined)
 
