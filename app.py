@@ -9,7 +9,7 @@ st.set_page_config(page_title="Yönlendirme Aktarımı", page_icon="📊")
 
 st.title("📦 Yönlendirme Otomasyonu")
 
-uploaded_po = st.file_uploader("Perfect Order dosyasını yükleyin (.xlsx)", type=["xlsx"])
+uploaded_po = st.file_uploader("ZTM009 dosyasını yükleyin (.xlsx)", type=["xlsx"])
 uploaded_yon = st.file_uploader("Yönlendirme şablon dosyasını yükleyin (.xlsx)", type=["xlsx"])
 
 def normalize(val):
@@ -19,25 +19,24 @@ def normalize(val):
 if uploaded_po and uploaded_yon:
     if st.button("🚀 Verileri Aktar ve Dosyayı Oluştur"):
         mapping = {
-            normalize("müşteri"): "Sipariş veren bayi/dist Kodu",
-            normalize("orjinal sevk noktası"): "Yönlendirme Yapacak Fabrika Kodu(1. SN)",
-            normalize("sevk eden fabrika"): "Yönlendirme Yapılan Fabrika Kodu (2. SN)",
-            normalize("fatura tarihi"): "Fatura Tarihi",
-            normalize("malzeme"): "Ürün Kodu (SKU)",
-            normalize("fiili sevk miktarı"): "Adet (Tava\Koli\Kasa)",
-            normalize("yönlendirme sebebi"): "Yönlendirme yapma nedeni"
+            normalize("Alıcı"): "Sipariş veren bayi/dist Kodu",
+            normalize("Üretim yeri"): "Yönlendirme Yapılan Fabrika Kodu (2. SN)",
+            normalize("Kapı Çıkış Tarihi"): "Fatura Tarihi",
+            normalize("Ürün"): "Ürün Kodu (SKU)",
+            normalize("Teslimat Miktarı"): "Adet (Tava\Koli\Kasa)",
+            normalize("yönlendirme nedeni"): "Yönlendirme yapma nedeni"
         }
 
         nakliye_kod_map = {
-            ("ZT", "02"): "ZTIR01",
-            ("ZT", "01"): "ZTIR02",
-            ("ZK", "02"): "ZKMY01",
-            ("ZK", "01"): "ZKMY02"
+            ("ZTIR", "Gidiş"): "ZTIR01",
+            ("ZTIR", "Gidiş-Dönüş"): "ZTIR02",
+            ("ZKMY", "Gidiş"): "ZKMY01",
+            ("ZKMY", "Gidiş-Dönüş"): "ZKMY02"
         }
 
         try:
             wb_src = openpyxl.load_workbook(uploaded_po, data_only=True)
-            ws_src = wb_src["Export"]
+            ws_src = wb_src["Data"]
             wb_dst = openpyxl.load_workbook(uploaded_yon)
             ws_dst = wb_dst["Ana_sayfa"]
 
@@ -59,9 +58,9 @@ if uploaded_po and uploaded_yon:
                         continue
                     ws_dst.cell(row=dst_row, column=dst_idx+1, value=row[src_idx])
 
-                nk_idx = src_headers.get("nakliyetipi")
-                yon_idx = src_headers.get("yön")
-                dst_nt_idx = dst_headers.get("nakliyetipi")
+                nk_idx = src_headers.get("Nakliye araçları")
+                yon_idx = src_headers.get("Nakliye Tipi Tanımı")
+                dst_nt_idx = dst_headers.get("Nakliye araçları")
                 if None not in (nk_idx, yon_idx, dst_nt_idx):
                     nk_val = str(row[nk_idx]).strip().upper() if row[nk_idx] else ""
                     yon_val = str(row[yon_idx]).strip().zfill(2) if row[yon_idx] else ""
