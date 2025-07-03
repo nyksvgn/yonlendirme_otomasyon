@@ -60,7 +60,7 @@ if uploaded_po and uploaded_yon:
 
                 nk_idx = src_headers.get("Nakliye araçları")
                 yon_idx = src_headers.get("Nakliye Tipi Tanımı")
-                dst_nt_idx = dst_headers.get("Nakliye araçları")
+                dst_nt_idx = dst_headers.get("Nakliye Tipi")
                 if None not in (nk_idx, yon_idx, dst_nt_idx):
                     def clean(val):
                        return re.sub(r"\s+", "", str(val).strip().upper())
