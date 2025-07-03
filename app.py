@@ -9,7 +9,7 @@ st.set_page_config(page_title="Yönlendirme Aktarımı", page_icon="📊")
 
 st.title("📦 Yönlendirme Otomasyonu")
 
-uploaded_po = st.file_uploader("ZTM009 dosyasını yükleyin (.xlsx)", type=["xlsx"])
+uploaded_po = st.file_uploader("ZTM003 dosyasını yükleyin (.xlsx)", type=["xlsx"])
 uploaded_yon = st.file_uploader("Yönlendirme şablon dosyasını yükleyin (.xlsx)", type=["xlsx"])
 
 def normalize(val):
@@ -42,7 +42,7 @@ if uploaded_po and uploaded_yon:
 
             src_headers = {normalize(cell.value): idx for idx, cell in enumerate(ws_src[1])}
             dst_headers = {normalize(cell.value): idx for idx, cell in enumerate(ws_dst[1])}
-            sevk_idx = src_headers.get("fiilisevkmiktarı")
+            sevk_idx = src_headers.get("teslimatmiktarı")
             dst_row = 2
             aktarilan = 0
 
