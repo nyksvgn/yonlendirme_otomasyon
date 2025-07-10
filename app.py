@@ -26,9 +26,9 @@ nakliye_kod_map = {
    ("ZTIR", "Gidiş"): "ZTIR01",
    ("ZTIR", "Gidiş-Dönüş"): "ZTIR02",
    ("ZKMY", "Gidiş"): "ZKMY01",
-   ("ZKMY", "Gidiş-Dönüş"): "ZKMY02"
-   ("ZKRK", "Gidiş-Dönüş"): "ZKRK02"
-   ("ZKRK", "Gidiş"): "ZKRK01",
+   ("ZKMY", "Gidiş-Dönüş"): "ZKMY02",
+   ("ZKRK", "Gidiş-Dönüş"): "ZKRK02",
+   ("ZKRK", "Gidiş"): "ZKRK01"
 }
 # Dosyalar yüklendiyse devam et
 if uploaded_po and uploaded_yon:
